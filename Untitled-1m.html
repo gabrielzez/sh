@@ -1,0 +1,174 @@
+<!DOCTYPE html> 
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Aniversário, Samiiiii!</title>
+    <style>
+        /* Estilos principais */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Garante que os emojis não criem barra de rolagem */
+            animation: changeBackground 10s infinite alternate; /* Animação do fundo */
+        }
+
+        /* Animação para o fundo alternando as cores */
+        @keyframes changeBackground {
+            0% { background-color: #ff4500; } /* Laranja */
+            33% { background-color: #1e90ff; } /* Azul */
+            66% { background-color: #ff0000; } /* Vermelho */
+            100% { background-color: #23db32; } /* Verde */
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-top: 50px;
+            color: white;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        p {
+            font-size: 1.5em;
+            color: #fff;
+        }
+
+        .message {
+            font-size: 1.2em;
+            margin-top: 30px;
+            color: #fff;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #ff1493;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Estilo do emoji de "explosão" */
+        .emoji {
+            position: absolute;
+            font-size: 3em;
+            opacity: 0;
+            animation: riseUp 5s forwards;
+        }
+
+        /* Animação de subida dos emojis com trajetória aleatória */
+        @keyframes riseUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-600px) translateX(var(--randomX)) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        /* Estilo da imagem (inicialmente escondida) */
+        .image-container {
+            display: none; /* Esconde a imagem inicialmente */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .image-container img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Feliz Aniversário, Samiiiiii!</h1>
+    <p>hoje Você totosa faz mais um aninho e espero q tenha um dia otimo pra pora 💖</p>
+
+    <div class="message">
+        <p>Sou bem grato por ter conhecido Você, muito muito muito mesmo . Não so hoje mas todos os seus dias seja cheio de felicidade e amor!</p>
+    </div>
+
+    <!-- Botão para a surpresa -->
+    <button class="btn" onclick="showConfetti()">Clique para uma surpresa!</button>
+
+    <!-- Música -->
+    <audio id="birthdayMusic" preload="auto">
+        <source src="happy-birthday-155461.mp3" type="audio/mp3"> <!-- Substitua pelo caminho da sua música -->
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
+    <!-- Imagem surpresa -->
+    <div class="image-container" id="imageContainer">
+        <img src="pb.jpg" alt="Surpresa de Aniversário"> <!-- Substitua com o caminho da sua imagem -->
+    </div>
+
+    <script>
+        // Função para criar a "explosão" de emojis de parabéns
+        function showConfetti() {
+            // Iniciar a música
+            const music = document.getElementById('birthdayMusic');
+            music.play();  // Toca a música ao clicar no botão
+
+            // Exibir a imagem de surpresa
+            const imageContainer = document.getElementById('imageContainer');
+            imageContainer.style.display = 'block'; // Exibe a imagem ao clicar no botão
+
+            const emojis = ['🎉', '🎂', '🎈', '🎊', '💖', '🥳', '🎁', '💐', '🎶', '🎤', '🕺', '💃', '🎮', '🌟', '🦄', '🧁', '🍾', '🍰', '🧸'];
+            const numberOfEmojis = 100; // Aumentado para 100 emojis
+            for (let i = 0; i < numberOfEmojis; i++) {
+                // Atraso para cada emoji
+                setTimeout(() => {
+                    createEmoji(emojis[Math.floor(Math.random() * emojis.length)]);
+                }, i * 100); // Reduzindo o atraso para 100ms para ter mais emojis simultaneamente
+            }
+        }
+
+        // Função que cria os emojis e os faz subir de forma aleatória
+        function createEmoji(emoji) {
+            const emojiElement = document.createElement('div');
+            emojiElement.classList.add('emoji');
+            emojiElement.innerText = emoji;
+
+            // Posição inicial aleatória
+            const x = Math.random() * window.innerWidth;  // Posição X aleatória
+            const y = window.innerHeight + 50;  // Começa logo abaixo da tela
+
+            // Definir um valor aleatório para o movimento no eixo X (direções para a esquerda/direita)
+            const randomX = (Math.random() - 0.5) * 500;  // Gera números entre -250 e +250
+
+            // Aplica a posição inicial e a animação
+            emojiElement.style.left = `${x}px`;
+            emojiElement.style.top = `${y}px`;
+
+            // Definir a variável CSS para a animação de deslocamento aleatório no eixo X
+            emojiElement.style.setProperty('--randomX', `${randomX}px`);
+
+            // Adiciona o emoji na tela
+            document.body.appendChild(emojiElement);
+
+            // Remove o emoji após a animação para não ficar na memória
+            setTimeout(() => {
+                emojiElement.remove();
+            }, 5000); // Emojis vão ser removidos após 5 segundos
+        }
+    </script>
+
+</body>
+</html>
